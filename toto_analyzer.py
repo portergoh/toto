@@ -18,7 +18,6 @@ from pprint import pprint
 from selenium import webdriver
 from wordcloud import WordCloud
 from datetime import datetime
-from pprint import pprint
 
 SLEEP_TIME = 1
 
@@ -187,7 +186,7 @@ def compute_num_frequency(num_row_list):
 	return dict_of_num_freq
 
 def generate_num_cloud(dict_of_num_freq):
-	"""Plot the frequency each winning number uses WordCloud
+	"""Plot the frequency each winning number using WordCloud
 
         Args:
                 dict_of_num_freq: a dict that contains each winning numbers frequency
