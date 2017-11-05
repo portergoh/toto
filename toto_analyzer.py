@@ -16,7 +16,6 @@ import numpy as np
 from bs4 import BeautifulSoup
 from pprint import pprint
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from wordcloud import WordCloud
 from datetime import datetime
 from pprint import pprint
@@ -24,6 +23,14 @@ from pprint import pprint
 SLEEP_TIME = 1
 
 def is_record_exist(date, file_path):
+	"""Uses grep to search for a date record
+
+    	Args:
+        	date: string object to search for
+		file_path: absolute path to the location of the file
+    	Returns:
+        	True or False
+	"""
         cmd = "grep -w '{}' {}".format(date,file_path)
         try:
                 output = subprocess.check_output(cmd,shell=True)
@@ -33,16 +40,36 @@ def is_record_exist(date, file_path):
                 return False
 
 def write_record_to_cache(record,file_path):
+	"""Append a date record to a file
+
+        Args:
+                record: contains a string object which has the date and toto numbers
+                file_path: absolute path to the location of the file
+        """
 	cmd = "echo {} >> {}".format(record,file_path)
 	output = subprocess.check_output(cmd,shell=True)
 
 def get_page_source(url):
+	"""Uses selenium module to get the page source of a site
+
+        Args:
+                url: web address of a site
+        Returns:
+               	a selenium object of the page source
+        """
 	driver = webdriver.Firefox()
         driver.get(url)
         page_source = driver.page_source.encode('utf-8')
 	return page_source
 
 def get_result_content(url):
+	"""Uses BeautifulSoup module to get the page source of a site
+
+        Args:
+                url: web address of a site
+        Returns:
+                soup object of the page
+        """
 	headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 	page_source = requests.get(url,headers=headers).content
 	#page_source = get_page_source(url)
@@ -50,6 +77,13 @@ def get_result_content(url):
 	return result_detail
 
 def get_winning_numbers(page_detail):
+	"""Uses BeautifulSoup module to get the winning numbers from page source of a site
+
+        Args:
+                page_detail: soup object
+        Returns:
+               	a list of winning numbers
+        """
 	winning_numbers = []
 	for i in range(1,7):
 		win_tag = page_detail.find("td", {"class":"win{}".format(i)})
@@ -58,6 +92,15 @@ def get_winning_numbers(page_detail):
 	return winning_numbers
 
 def get_past_results(url,update_from_sgpool=False):
+	"""Retrieve the past TOTO records from cache
+
+        Args:
+                url: web address of Singapore pool site
+		update_from_sgpool: default is set to False, setting it True will fetch new updates
+				    from Singapore pool
+        Returns:
+                a dict of past records of winning numbers
+        """
 	data_path = ".cache"
     	lottery_results = {}
 
@@ -90,6 +133,13 @@ def get_past_results(url,update_from_sgpool=False):
 	return lottery_results
 
 def read_dict_from_cache(path):
+	"""Read from file and return a dict object of the data
+
+        Args:
+                path: absolute path to the location of the file
+        Returns:
+                a dict representation of the file records
+        """
 	dict_of_results = {}
 	with open(path, "r") as fint:
 		for line in fint:
@@ -99,6 +149,13 @@ def read_dict_from_cache(path):
 	return  dict_of_results
 
 def merge_list_rows_into_list_of_num(num_row_list):
+	""" Merge all the sublists into a single list
+
+        Args:
+                num_row_list: a list that contains many sublist of winning numbers
+        Returns:
+                a list of winning numbers
+        """
         list_of_num = []
         for num_row in num_row_list:
                 num_row_split = num_row.split()
@@ -107,6 +164,13 @@ def merge_list_rows_into_list_of_num(num_row_list):
         return list_of_num
 
 def compute_num_frequency(num_row_list):
+	"""Compute the frequency of each number in a list
+
+        Args:
+                num_row_list: a list that contains many sublist of winning numbers
+        Returns:
+                a dict of winning numbers which has the value of the occurance frequency
+        """
 	dict_of_num_freq = {}
 
 	list_of_num = merge_list_rows_into_list_of_num(num_row_list)
@@ -123,12 +187,27 @@ def compute_num_frequency(num_row_list):
 	return dict_of_num_freq
 
 def generate_num_cloud(dict_of_num_freq):
+	"""Plot the frequency each winning number uses WordCloud
+
+        Args:
+                dict_of_num_freq: a dict that contains each winning numbers frequency
+        Returns:
+                a numbercloud plot of the winning number occurance
+        """
 	numcloud = WordCloud().generate_from_frequencies(frequencies=dict_of_num_freq)
 	plt.imshow(numcloud, interpolation ='bilinear')
 	plt.axis("off")
 	plt.show()
 
 def get_last_drawn_num_rows(dict_of_results,num):
+	"""Obtain winning numbers based on x number of last draw
+
+        Args:
+                dict_of_results: a dict representation of all winning records
+		num: number which indicate how many draws
+        Returns:
+                a tuple that contains a list of last drawn dates and winning records
+        """
 	selected_num_rows = []
 	sorted_keys = sorted(dict_of_results.iterkeys(),key=lambda x: datetime.strptime(x, "%a, %d %b %Y"),reverse=True)
 	for key in sorted_keys[0:num]:
@@ -136,10 +215,27 @@ def get_last_drawn_num_rows(dict_of_results,num):
 	return sorted_keys,selected_num_rows
 
 def generate_quickpick(num_list,num):
+	"""Generate random winning numbers based on a defined list
+
+        Args:
+                num_list: a list of numbers
+                num: indicate how many numbers to generate
+        Returns:
+                a list of random numbers size defined by user
+        """
 	random_list  = np.random.choice(num_list,num,replace=False)
 	return random_list
 
 def generate_quickpick_list(num_list,num,row):
+	"""Generate sets of random winning numbers based on a defined list
+
+        Args:
+                num_list: a list of numbers
+                num: indicate how many numbers to generate
+		row: how many sets to generate
+        Returns:
+                a list of set of random numbers size defined by user
+        """
 	list_of_rows = []
 	for _ in range(0,row):
 		random_list = generate_quickpick(num_list,num)
