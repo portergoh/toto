@@ -1,6 +1,10 @@
-# toto
+##TOTO analyzer for Singapore Pool v1.0
+This is a tool developed as part of the **Python for Data, Ops and Things** course.
+It collect and analyse data from Singapore pool.
 
-TOTO analyzer for Singapore Pool v1.0
+```
+usage: toto_analyzer.py [-h] [--plotfreq] [--update] [-d DRAW] [-s SET]
+                        [-qp QUICKPICK]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -12,3 +16,4 @@ optional arguments:
                         with -qp option
   -qp QUICKPICK, --quickpick QUICKPICK
                         generate a list of random numbers
+```
