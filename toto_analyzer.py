@@ -91,7 +91,7 @@ def get_winning_numbers(page_detail):
 	return winning_numbers
 
 def get_past_results(url,update_from_sgpool=False):
-	"""Retrieve the past TOTO records from cache
+	"""Retrieve past TOTO records from cache
 
         Args:
                 url: web address of Singapore pool site
@@ -186,7 +186,7 @@ def compute_num_frequency(num_row_list):
 	return dict_of_num_freq
 
 def generate_num_cloud(dict_of_num_freq):
-	"""Plot the frequency each winning number using WordCloud
+	"""Plot the frequency of each winning number using WordCloud
 
         Args:
                 dict_of_num_freq: a dict that contains each winning numbers frequency
