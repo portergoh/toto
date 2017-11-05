@@ -1,5 +1,11 @@
 #!/usr/bin/env pythonw
 
+#########################
+# TOTO Analyzer         #
+# Goh Khee Teck		#
+# pydot4 class		#
+#########################
+
 import requests
 import time
 import subprocess
@@ -147,18 +153,18 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="TOTO analyzer for Singapore Pool v1.0")
 
 	parser.add_argument("--plotfreq",
-				help="plot the number occurance using word cloud",
+				help="plot number frequency using word cloud",
 				action="store_true")
 
 	parser.add_argument("--update",
-				help="update the local cache with latest records from Singapore Pool",
+				help="update local cache with latest records from Singapore Pool",
 				action="store_true")
 
 	parser.add_argument("-d", "--draw", type=int,
-                    help="return last number of draws based of user input")
+                    help="return list of last draws based on user input")
 
 	parser.add_argument("-s", "--set", type=int,
-                    help="return a given sets of random numbers, use together with -qp option")
+                    help="return sets of random numbers, use together with -qp option")
 
 	parser.add_argument("-qp", "--quickpick", type=int,
                     help="generate a list of random numbers")
@@ -178,12 +184,17 @@ if __name__ == "__main__":
 		dict_of_num_freq = compute_num_frequency(list_of_draws)
                 generate_num_cloud(dict_of_num_freq)
 
-	if (args.draw is not None) & (args.quickpick is not None):
+	if args.quickpick is not None:
 		random_list = []
-		dates,list_of_draws = get_last_drawn_num_rows(dict_of_results,args.draw)
-		list_of_num = merge_list_rows_into_list_of_num(list_of_draws)
-		unique_list = list(set(list_of_num))
- 		print ("Your quickpick numbers are")
+		unique_list = []
+		if args.draw is not None:
+			dates,list_of_draws = get_last_drawn_num_rows(dict_of_results,args.draw)
+			list_of_num = merge_list_rows_into_list_of_num(list_of_draws)
+			unique_list = list(set(list_of_num))
+		else:
+			unique_list = range(1,50)
+
+		print ("Your quick pick numbers are")
 		if args.set is not None:
 			random_list = generate_quickpick_list(unique_list,args.quickpick,args.set)
 			for row in random_list:
