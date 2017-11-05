@@ -6,6 +6,7 @@ import subprocess
 import json
 import argparse
 import matplotlib.pyplot as plt
+import numpy as np
 from bs4 import BeautifulSoup
 from pprint import pprint
 from selenium import webdriver
@@ -91,13 +92,18 @@ def read_dict_from_cache(path):
 			dict_of_results[date] = split_str[2]
 	return  dict_of_results
 
+def merge_list_rows_into_list_of_num(num_row_list):
+        list_of_num = []
+        for num_row in num_row_list:
+                num_row_split = num_row.split()
+                for num in num_row_split:
+                        list_of_num.append(num)
+        return list_of_num
+
 def compute_num_frequency(num_row_list):
-	list_of_num = []
 	dict_of_num_freq = {}
-	for num_row in num_row_list:
-		num_row_split = num_row.split()
-		for num in num_row_split:
-			list_of_num.append(num)
+
+	list_of_num = merge_list_rows_into_list_of_num(num_row_list)
 
 	for num in list_of_num:
 		if num in dict_of_num_freq:
@@ -123,11 +129,23 @@ def get_last_drawn_num_rows(dict_of_results,num):
 		selected_num_rows.append(dict_of_results[key])
 	return sorted_keys,selected_num_rows
 
+def generate_quickpick(num_list,num):
+	random_list  = np.random.choice(num_list,num,replace=False)
+	return random_list
+
+def generate_quickpick_list(num_list,num,row):
+	list_of_rows = []
+	for _ in range(0,row):
+		random_list = generate_quickpick(num_list,num)
+		list_of_rows.append(random_list)
+	return list_of_rows
+
 if __name__ == "__main__":
 	url = "http://www.singaporepools.com.sg/en/product/Pages/toto_results.aspx"
 	# read first from cache, if cache does not have, fetch from internet
 	retrieve_updates_from_internet = False
-	parser = argparse.ArgumentParser()
+	parser = argparse.ArgumentParser(description="TOTO analyzer for Singapore Pool v1.0")
+
 	parser.add_argument("--plotfreq",
 				help="plot the number occurance using word cloud",
 				action="store_true")
@@ -137,13 +155,20 @@ if __name__ == "__main__":
 				action="store_true")
 
 	parser.add_argument("-d", "--draw", type=int,
-                    help="return the last number of draws based of user input")
+                    help="return last number of draws based of user input")
+
+	parser.add_argument("-s", "--set", type=int,
+                    help="return a given sets of random numbers, use together with -qp option")
+
+	parser.add_argument("-qp", "--quickpick", type=int,
+                    help="generate a list of random numbers")
 
 	args = parser.parse_args()
         if args.update:
 		retrieve_updates_from_internet = True
 
 	dict_of_results = get_past_results(url,retrieve_updates_from_internet)
+
         if (args.plotfreq) & (args.draw is None):
 		dict_of_num_freq = compute_num_frequency(dict_of_results.values())
 		generate_num_cloud(dict_of_num_freq)
@@ -153,7 +178,22 @@ if __name__ == "__main__":
 		dict_of_num_freq = compute_num_frequency(list_of_draws)
                 generate_num_cloud(dict_of_num_freq)
 
-	if args.draw is not None:
+	if (args.draw is not None) & (args.quickpick is not None):
+		random_list = []
+		dates,list_of_draws = get_last_drawn_num_rows(dict_of_results,args.draw)
+		list_of_num = merge_list_rows_into_list_of_num(list_of_draws)
+		unique_list = list(set(list_of_num))
+ 		print ("Your quickpick numbers are")
+		if args.set is not None:
+			random_list = generate_quickpick_list(unique_list,args.quickpick,args.set)
+			for row in random_list:
+                                print (row)
+		else:
+			random_list = generate_quickpick(unique_list,args.quickpick)
+			print (random_list)
+
+	if (args.draw is not None) & (args.quickpick is None):
 		dates,list_of_draws = get_last_drawn_num_rows(dict_of_results,args.draw)
 		for i,draw in enumerate(list_of_draws):
 			print("  {} - {}".format(dates[i],draw.strip()))
+
