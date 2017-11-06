@@ -4,17 +4,19 @@ It collect and analyse data from Singapore pool.
 ```
 usage: toto_analyzer.py [-h] [--plotfreq] [--update] [-d DRAW] [-s SET]
                         [-qp QUICKPICK]
+
 optional arguments:
   -h, --help            show this help message and exit
   --plotfreqwc          plot number frequency using word cloud
   --plotfreqbc          plot number frequency using bar chart
   --update              update local cache with latest records from Singapore
                         Pool
-  -d DRAW, --draw DRAW  return list of last draws based on user input
-  -s SET, --set SET     return sets of random numbers, use together with -qp
-                        option
+  -d DRAW, --draw DRAW  return x number of last draws winning numbers
+  -s SET, --set SET     return sets of random numbers, can be use together
+                        with -qp option
   -qp QUICKPICK, --quickpick QUICKPICK
-                        generate a list of random numbers
+                        generate a list of random numbers, can be use together
+                        with -d option
 ```
 ### Examples
 **Update the cache with the latest results from Singapore Pool**
