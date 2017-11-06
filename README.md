@@ -21,7 +21,7 @@ optional arguments:
 ### Examples
 **Update the cache with the latest results from Singapore Pool**
 <br>toto_analyzer.py --update
-**Fetch the last drawn 5 results**
+<br>**Fetch the last drawn 5 results**
 <br>toto_analyzer.py -d 5
 ```
   Thu, 02 Nov 2017 - 7 17 18 30 32 47
