@@ -283,13 +283,13 @@ if __name__ == "__main__":
 				action="store_true")
 
 	parser.add_argument("-d", "--draw", type=int,
-                    help="return list of last draws based on user input")
+                    help="return x number of last draws winning numbers")
 
 	parser.add_argument("-s", "--set", type=int,
-                    help="return sets of random numbers, use together with -qp option")
+                    help="return sets of random numbers, can be use together with -qp option")
 
 	parser.add_argument("-qp", "--quickpick", type=int,
-                    help="generate a list of random numbers")
+                    help="generate a list of random numbers, can be use together with -d option")
 
 	args = parser.parse_args()
         if args.update:
