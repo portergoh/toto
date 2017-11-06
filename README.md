@@ -18,7 +18,7 @@ optional arguments:
                         generate a list of random numbers
 ```
 
-*** Examples
+### Examples
 Fetch the last drawn result
 toto_analyzer.py -d 1
 ```
