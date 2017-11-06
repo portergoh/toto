@@ -31,8 +31,19 @@ optional arguments:
   Mon, 23 Oct 2017 - 2 9 23 35 38 48
   Thu, 19 Oct 2017 - 2 4 15 20 26 28
 ```
-**Generate a num cloud plot based on all last 15 draws**
+**Generate a num cloud plot based on last 15 draws**
 <br>toto_analyzer.py -d 15 --plotfreq
 <p align="center">
   <img src="../master/resource/numcloud.png" width="500"/>
 </p>
+
+**Generate 5 sets of quick pick using last 15 draw numbers**
+<br>toto_analyzer.py --d 15 -qp 6 -s 5
+```
+Your quick pick numbers are
+['44' '34' '28' '2' '36' '19']
+['46' '28' '7' '36' '21' '38']
+['30' '8' '44' '14' '48' '47']
+['4' '20' '32' '47' '36' '21']
+['4' '14' '35' '29' '30' '18']
+```
