@@ -19,8 +19,12 @@ optional arguments:
 ```
 
 ### Examples
-Fetch the last drawn result
-#### toto_analyzer.py -d 1
+Fetch the last drawn 5 results
+#### toto_analyzer.py -d 5
 ```
-Thu, 02 Nov 2017 - 7 17 18 30 32 47
+  Thu, 02 Nov 2017 - 7 17 18 30 32 47
+  Mon, 30 Oct 2017 - 8 20 30 43 46 48
+  Thu, 26 Oct 2017 - 3 10 25 32 36 37
+  Mon, 23 Oct 2017 - 2 9 23 35 38 48
+  Thu, 19 Oct 2017 - 2 4 15 20 26 28
 ```
