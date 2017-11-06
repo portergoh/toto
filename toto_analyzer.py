@@ -187,20 +187,6 @@ def compute_num_frequency(num_row_list):
 
 	return dict_of_num_freq
 
-def plot_num_freq_using_word_cloud(list_of_draws):
-	"""Plot the frequency of each winning number using WordCloud
-
-        Args:
-		list_of_draws: a list of row of numbers of past draws
-        Returns:
-                a numbercloud plot of the winning number occurance
-        """
- 	dict_of_num_freq = compute_num_frequency(list_of_draws)
-	numcloud = WordCloud().generate_from_frequencies(frequencies=dict_of_num_freq)
-	plt.imshow(numcloud, interpolation ='bilinear')
-	plt.axis("off")
-	plt.show()
-
 def get_last_drawn_num_rows(dict_of_results,num):
 	"""Obtain winning numbers based on x number of last draw
 
@@ -215,6 +201,41 @@ def get_last_drawn_num_rows(dict_of_results,num):
 	for key in sorted_keys[0:num]:
 		selected_num_rows.append(dict_of_results[key])
 	return sorted_keys,selected_num_rows
+
+
+def plot_num_freq_using_word_cloud(list_of_draws):
+	"""Plot the frequency of each winning number using WordCloud
+
+        Args:
+		list_of_draws: a list of row of numbers of past draws
+        Returns:
+                a numbercloud plot of the winning number occurance
+        """
+ 	dict_of_num_freq = compute_num_frequency(list_of_draws)
+	numcloud = WordCloud().generate_from_frequencies(frequencies=dict_of_num_freq)
+	plt.imshow(numcloud, interpolation ='bilinear')
+	plt.axis("off")
+	plt.show()
+
+def plot_num_freq_using_bar(list_of_draws):
+	"""Plot using bar chart to show the number frequency
+
+        Args:
+                list_of_draws: a list of row of numbers of past draws
+        """
+	dict_num_freq = compute_num_frequency(list_of_draws)
+	sorted_num_keys = sorted(dict_num_freq.keys(), key = lambda x: int(x))
+	sorted_dict_num_freq = OrderedDict()
+	for key in sorted_num_keys:
+		sorted_dict_num_freq[key] = dict_num_freq[key]
+
+	#keys become rows
+	df = pd.DataFrame.from_dict(sorted_dict_num_freq, orient="index")
+	df.columns = ["frequency"]
+	ax = df.plot(kind="bar",title ="Toto number frequency", figsize=(12, 8), legend=False, fontsize=11)
+	ax.set_xlabel("TOTO numbers", fontsize=12)
+	ax.set_ylabel("Frequency", fontsize=12)
+	plt.show()
 
 def generate_quickpick(num_list,num):
 	"""Generate random winning numbers based on a defined list
@@ -244,25 +265,7 @@ def generate_quickpick_list(num_list,num,row):
 		list_of_rows.append(random_list)
 	return list_of_rows
 
-def plot_num_freq_using_bar(list_of_draws):
-	"""Plot using bar chart to show the number frequency
 
-        Args:
-                list_of_draws: a list of row of numbers of past draws
-        """
-	dict_num_freq = compute_num_frequency(list_of_draws)
-	sorted_num_keys = sorted(dict_num_freq.keys(), key = lambda x: int(x))
-	sorted_dict_num_freq = OrderedDict()
-	for key in sorted_num_keys:
-		sorted_dict_num_freq[key] = dict_num_freq[key]
-
-	#keys become rows
-	df = pd.DataFrame.from_dict(sorted_dict_num_freq, orient="index")
-	df.columns = ["frequency"]
-	ax = df.plot(kind="bar",title ="Toto number frequency", figsize=(12, 8), legend=False, fontsize=11)
-	ax.set_xlabel("TOTO numbers", fontsize=12)
-	ax.set_ylabel("Frequency", fontsize=12)
-	plt.show()
 
 if __name__ == "__main__":
 	url = "http://www.singaporepools.com.sg/en/product/Pages/toto_results.aspx"
@@ -271,25 +274,25 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="TOTO analyzer for Singapore Pool v1.0")
 
 	parser.add_argument("--plotfreqwc",
-				help="plot number frequency using word cloud",
-				action="store_true")
+						help="plot number frequency using word cloud",
+						action="store_true")
 
 	parser.add_argument("--plotfreqbc",
-                                help="plot number frequency using bar chart",
-                                action="store_true")
+                         help="plot number frequency using bar chart",
+                         action="store_true")
 
 	parser.add_argument("--update",
-				help="update local cache with latest records from Singapore Pool",
-				action="store_true")
+						help="update local cache with latest records from Singapore Pool",
+						action="store_true")
 
 	parser.add_argument("-d", "--draw", type=int,
-                    help="return x number of last draws winning numbers")
+                    	help="return x number of last draws winning numbers")
 
 	parser.add_argument("-s", "--set", type=int,
-                    help="return sets of random numbers, can be use together with -qp option")
+                    	help="return sets of random numbers, can be use together with -qp option")
 
 	parser.add_argument("-qp", "--quickpick", type=int,
-                    help="generate a list of random numbers, can be use together with -d option")
+                    	help="generate a list of random numbers, can be use together with -d option")
 
 	args = parser.parse_args()
         if args.update:
