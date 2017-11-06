@@ -64,7 +64,7 @@ def get_page_source(url):
 	return page_source
 
 def get_result_content(url):
-	"""Uses BeautifulSoup module to get the page source of a site
+	"""Uses BeautifulSoup module to get the page source from Singapore Pool result detail page
 
         Args:
                 url: web address of a site
@@ -78,7 +78,7 @@ def get_result_content(url):
 	return result_detail
 
 def get_winning_numbers(page_detail):
-	"""Uses BeautifulSoup module to get the winning numbers from page source of a site
+	"""Uses BeautifulSoup module to get the winning numbers from page source of Singapore Pool result detail page
 
         Args:
                 page_detail: soup object
@@ -274,25 +274,25 @@ if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="TOTO analyzer for Singapore Pool v1.0")
 
 	parser.add_argument("--plotfreqwc",
-						help="plot number frequency using word cloud",
-						action="store_true")
+				help="plot number frequency using word cloud",
+				action="store_true")
 
 	parser.add_argument("--plotfreqbc",
-                         help="plot number frequency using bar chart",
-                         action="store_true")
+                         	help="plot number frequency using bar chart",
+                         	action="store_true")
 
 	parser.add_argument("--update",
-						help="update local cache with latest records from Singapore Pool",
-						action="store_true")
+				help="update local cache with latest records from Singapore Pool",
+				action="store_true")
 
 	parser.add_argument("-d", "--draw", type=int,
-                    	help="return x number of last draws winning numbers")
+                    		help="return x number of last draws winning numbers")
 
 	parser.add_argument("-s", "--set", type=int,
-                    	help="return sets of random numbers, can be use together with -qp option")
+                    		help="return sets of random numbers, can be use together with -qp option")
 
 	parser.add_argument("-qp", "--quickpick", type=int,
-                    	help="generate a list of random numbers, can be use together with -d option")
+                    		help="generate a list of random numbers, can be use together with -d option")
 
 	args = parser.parse_args()
         if args.update:
