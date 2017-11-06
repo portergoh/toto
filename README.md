@@ -20,7 +20,7 @@ optional arguments:
 
 ### Examples
 **Update the cache with the latest results from Singapore Pool**
-#### toto_analyzer.py --update
+<br>toto_analyzer.py --update
 **Fetch the last drawn 5 results**
 #### toto_analyzer.py -d 5
 ```
@@ -31,7 +31,7 @@ optional arguments:
   Thu, 19 Oct 2017 - 2 4 15 20 26 28
 ```
 **Generate a num cloud plot based on all last 15 draws**
-#### toto_analyzer.py -d 15 --plotfreq
+<br>toto_analyzer.py -d 15 --plotfreq
 <p align="center">
-  <img src="../resource/numcloud.png" width="990"/>
+  <img src="../master/resource/numcloud.png" width="990"/>
 </p>
