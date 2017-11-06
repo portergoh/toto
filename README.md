@@ -8,7 +8,8 @@ usage: toto_analyzer.py [-h] [--plotfreq] [--update] [-d DRAW] [-s SET]
 
 optional arguments:
   -h, --help            show this help message and exit
-  --plotfreq            plot number frequency using word cloud
+  --plotfreqwc          plot number frequency using word cloud
+  --plotfreqbc          plot number frequency using bar chart
   --update              update local cache with latest records from Singapore
                         Pool
   -d DRAW, --draw DRAW  return list of last draws based on user input
@@ -31,12 +32,16 @@ optional arguments:
   Mon, 23 Oct 2017 - 2 9 23 35 38 48
   Thu, 19 Oct 2017 - 2 4 15 20 26 28
 ```
-**Generate a num cloud plot based on last 15 draws**
-<br>toto_analyzer.py -d 15 --plotfreq
+**Plot using wordcloud based on last 15 draws**
+<br>toto_analyzer.py -d 15 --plotfreqwc
 <p align="center">
   <img src="../master/resource/numcloud.png" width="500"/>
 </p>
-
+**Plot using bar chart based on last 15 draws**
+<br>toto_analyzer.py -d 15 --plotfreqbc
+<p align="center">
+  <img src="../master/resource/barchart.png" width="500"/>
+</p>
 **Generate 5 sets of quick pick using last 15 draw numbers**
 <br>toto_analyzer.py --d 15 -qp 6 -s 5
 ```
