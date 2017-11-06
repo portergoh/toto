@@ -38,7 +38,7 @@ optional arguments:
 **Plot using bar chart based on last 15 draws**
 <br>toto_analyzer.py -d 15 --plotfreqbc
 <p align="center">
-  <img src="../master/resource/barchart.png" width="550"/>
+  <img src="../master/resource/barchart.png" width="600"/>
 </p>
 
 **Generate 5 sets of quick pick using last 15 draw numbers**
