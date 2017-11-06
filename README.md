@@ -1,11 +1,9 @@
 ## TOTO analyzer for Singapore Pool v1.0
 This is a tool developed as part of the **Python for Data, Ops and Things** course.<br>
 It collect and analyse data from Singapore pool.
-
 ```
 usage: toto_analyzer.py [-h] [--plotfreq] [--update] [-d DRAW] [-s SET]
                         [-qp QUICKPICK]
-
 optional arguments:
   -h, --help            show this help message and exit
   --plotfreqwc          plot number frequency using word cloud
@@ -18,7 +16,6 @@ optional arguments:
   -qp QUICKPICK, --quickpick QUICKPICK
                         generate a list of random numbers
 ```
-
 ### Examples
 **Update the cache with the latest results from Singapore Pool**
 <br>toto_analyzer.py --update
@@ -37,11 +34,13 @@ optional arguments:
 <p align="center">
   <img src="../master/resource/numcloud.png" width="500"/>
 </p>
+
 **Plot using bar chart based on last 15 draws**
 <br>toto_analyzer.py -d 15 --plotfreqbc
 <p align="center">
-  <img src="../master/resource/barchart.png" width="500"/>
+  <img src="../master/resource/barchart.png" width="550"/>
 </p>
+
 **Generate 5 sets of quick pick using last 15 draw numbers**
 <br>toto_analyzer.py --d 15 -qp 6 -s 5
 ```
