@@ -17,3 +17,10 @@ optional arguments:
   -qp QUICKPICK, --quickpick QUICKPICK
                         generate a list of random numbers
 ```
+
+***Examples
+Fetch the last drawn result
+toto_analyzer.py -d 1
+```
+Thu, 02 Nov 2017 - 7 17 18 30 32 47
+```
