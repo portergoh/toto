@@ -13,11 +13,13 @@ import json
 import argparse
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from bs4 import BeautifulSoup
 from pprint import pprint
 from selenium import webdriver
 from wordcloud import WordCloud
 from datetime import datetime
+from collections import OrderedDict
 
 SLEEP_TIME = 1
 
@@ -185,14 +187,15 @@ def compute_num_frequency(num_row_list):
 
 	return dict_of_num_freq
 
-def generate_num_cloud(dict_of_num_freq):
+def plot_num_freq_using_word_cloud(list_of_draws):
 	"""Plot the frequency of each winning number using WordCloud
 
         Args:
-                dict_of_num_freq: a dict that contains each winning numbers frequency
+		list_of_draws: a list of row of numbers of past draws
         Returns:
                 a numbercloud plot of the winning number occurance
         """
+ 	dict_of_num_freq = compute_num_frequency(list_of_draws)
 	numcloud = WordCloud().generate_from_frequencies(frequencies=dict_of_num_freq)
 	plt.imshow(numcloud, interpolation ='bilinear')
 	plt.axis("off")
@@ -241,15 +244,39 @@ def generate_quickpick_list(num_list,num,row):
 		list_of_rows.append(random_list)
 	return list_of_rows
 
+def plot_num_freq_using_bar(list_of_draws):
+	"""Plot using bar chart to show the number frequency
+
+        Args:
+                list_of_draws: a list of row of numbers of past draws
+        """
+	dict_num_freq = compute_num_frequency(list_of_draws)
+	sorted_num_keys = sorted(dict_num_freq.keys(), key = lambda x: int(x))
+	sorted_dict_num_freq = OrderedDict()
+	for key in sorted_num_keys:
+		sorted_dict_num_freq[key] = dict_num_freq[key]
+
+	#keys become rows
+	df = pd.DataFrame.from_dict(sorted_dict_num_freq, orient="index")
+	df.columns = ["frequency"]
+	ax = df.plot(kind="bar",title ="Toto number frequency", figsize=(12, 8), legend=False, fontsize=11)
+	ax.set_xlabel("TOTO numbers", fontsize=12)
+	ax.set_ylabel("Frequency", fontsize=12)
+	plt.show()
+
 if __name__ == "__main__":
 	url = "http://www.singaporepools.com.sg/en/product/Pages/toto_results.aspx"
 	# read first from cache, if cache does not have, fetch from internet
 	retrieve_updates_from_internet = False
 	parser = argparse.ArgumentParser(description="TOTO analyzer for Singapore Pool v1.0")
 
-	parser.add_argument("--plotfreq",
+	parser.add_argument("--plotfreqwc",
 				help="plot number frequency using word cloud",
 				action="store_true")
+
+	parser.add_argument("--plotfreqbc",
+                                help="plot number frequency using bar chart",
+                                action="store_true")
 
 	parser.add_argument("--update",
 				help="update local cache with latest records from Singapore Pool",
@@ -270,14 +297,19 @@ if __name__ == "__main__":
 
 	dict_of_results = get_past_results(url,retrieve_updates_from_internet)
 
-        if (args.plotfreq) & (args.draw is None):
-		dict_of_num_freq = compute_num_frequency(dict_of_results.values())
-		generate_num_cloud(dict_of_num_freq)
+        if (args.plotfreqwc) & (args.draw is None):
+		plot_num_freq_using_word_cloud(dict_of_results.values())
 
-	if (args.plotfreq) & (args.draw is not None):
-		dates,list_of_draws = get_last_drawn_num_rows(dict_of_results,args.draw)
-		dict_of_num_freq = compute_num_frequency(list_of_draws)
-                generate_num_cloud(dict_of_num_freq)
+	if (args.plotfreqwc) & (args.draw is not None):
+		_,list_of_draws = get_last_drawn_num_rows(dict_of_results,args.draw)
+                plot_num_freq_using_word_cloud(list_of_draws)
+
+	if (args.plotfreqbc) & (args.draw is None):
+		plot_num_freq_using_bar(dict_of_results.values())
+
+	if (args.plotfreqbc) & (args.draw is not None):
+		_,list_of_draws = get_last_drawn_num_rows(dict_of_results,args.draw)
+		plot_num_freq_using_bar(list_of_draws)
 
 	if args.quickpick is not None:
 		random_list = []
