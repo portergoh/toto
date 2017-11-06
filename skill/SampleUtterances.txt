@@ -1,0 +1,7 @@
+YesIntent yup
+YesIntent yes
+YesIntent sure
+NoIntent nope
+NoIntent no
+NoIntent dun want
+NoIntent go away
