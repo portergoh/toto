@@ -1,9 +1,9 @@
 #!/usr/bin/env pythonw
 
 #################################
-# TOTO Analyzer for Alexa 	#
+# TOTO Analyzer using Alexa 	#
 # Goh Khee Teck			#
-# pydot4 clas			#
+# pydot4 class			#
 #################################
 
 from toto_analyzer import get_past_results,get_last_drawn_num_rows
