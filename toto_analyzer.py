@@ -9,13 +9,11 @@
 import requests
 import time
 import subprocess
-import json
 import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
-from pprint import pprint
 from selenium import webdriver
 from wordcloud import WordCloud
 from datetime import datetime
