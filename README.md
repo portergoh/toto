@@ -45,7 +45,7 @@ optional arguments:
 </p>
 
 **Generate 5 sets of quick pick using last 15 draw numbers**
-<br>toto_analyzer.py --d 15 -qp 6 -s 5
+<br>toto_analyzer.py -d 15 -qp 6 -s 5
 ```
 Your quick pick numbers are
 ['44' '34' '28' '2' '36' '19']
