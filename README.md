@@ -10,6 +10,8 @@ optional arguments:
   -h, --help            show this help message and exit
   --plotfreqwc          plot number frequency using word cloud
   --plotfreqbc          plot number frequency using bar chart
+  --notin               indicate not to select numbers from any of the
+                        selected draws
   --update              update local cache with latest records from Singapore
                         Pool
   -d DRAW, --draw DRAW  return x number of last draws winning numbers
@@ -53,4 +55,24 @@ Your quick pick numbers are
 ['30' '8' '44' '14' '48' '47']
 ['4' '20' '32' '47' '36' '21']
 ['4' '14' '35' '29' '30' '18']
+```
+**Generate 5 sets of quick pick for numbers not in the last 15 draw**
+<br>toto_analyzer.py -d 15 -qp 6 -s 5 --notin
+```
+Your quick pick numbers are
+[16  1 39  5 31 13]
+[45  1 16 13  5 39]
+[45  1 31  5 39 16]
+[13 31 39 45  1 16]
+[31 16  5 39 45 13]
+```
+**Generate 5 sets of quick pick using random numbers**
+<br>toto_analyzer.py -qp 6 -s 5
+```
+Your quick pick numbers are
+[33 49 28 43 38 25]
+[15  6 21  7 17 11]
+[43 14 20  1 18 36]
+[23 34 47 49 17 24]
+[34 49  2  8 46 43]
 ```
