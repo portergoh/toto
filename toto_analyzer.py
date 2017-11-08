@@ -9,7 +9,6 @@
 import requests
 import time
 import subprocess
-import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -263,9 +262,24 @@ def generate_quickpick_list(num_list,num,row):
 		list_of_rows.append(random_list)
 	return list_of_rows
 
+def get_num_not_in_past_draw(past_draw_nums):
+	"""Get numbers that is outside of past draws
+        Args:
+                past_draw_nums: a list of unique numbers for past draws
+        Returns:
+                a list of numbers that are not in past draws
+        """
+	num_not_in_past_draw = range(1,50)
+	for num in past_draw_nums:
+		num_int = int(num.strip())
+		if num_int in num_not_in_past_draw:
+			num_not_in_past_draw.remove(num_int)
 
+	return	num_not_in_past_draw
 
 if __name__ == "__main__":
+	import argparse
+
 	url = "http://www.singaporepools.com.sg/en/product/Pages/toto_results.aspx"
 	# read first from cache, if cache does not have, fetch from internet
 	retrieve_updates_from_internet = False
@@ -278,6 +292,10 @@ if __name__ == "__main__":
 	parser.add_argument("--plotfreqbc",
                          	help="plot number frequency using bar chart",
                          	action="store_true")
+
+	parser.add_argument("--notin",
+                                help="option to indicate not to select numbers from any of the selected draw",
+                                action="store_true")
 
 	parser.add_argument("--update",
 				help="update local cache with latest records from Singapore Pool",
@@ -314,21 +332,27 @@ if __name__ == "__main__":
 
 	if args.quickpick is not None:
 		random_list = []
-		unique_list = []
-		if args.draw is not None:
-			dates,list_of_draws = get_last_drawn_num_rows(dict_of_results,args.draw)
-			list_of_num = merge_list_rows_into_list_of_num(list_of_draws)
-			unique_list = list(set(list_of_num))
-		else:
-			unique_list = range(1,50)
+		input_list = []
+
+		_,list_of_draws = get_last_drawn_num_rows(dict_of_results,args.draw)
+                list_of_num = merge_list_rows_into_list_of_num(list_of_draws)
+		past_draw_nums_list = list(set(list_of_num))
+
+		if args.draw is None:
+		 	input_list = range(1,50)
+		elif (args.draw) & (args.notin is not True):
+			input_list = past_draw_nums_list
+		elif (args.draw) & (args.notin):
+			print "hehehe"
+			input_list = get_num_not_in_past_draw(past_draw_nums_list)
 
 		print ("Your quick pick numbers are")
 		if args.set is not None:
-			random_list = generate_quickpick_list(unique_list,args.quickpick,args.set)
+			random_list = generate_quickpick_list(input_list,args.quickpick,args.set)
 			for row in random_list:
                                 print (row)
 		else:
-			random_list = generate_quickpick(unique_list,args.quickpick)
+			random_list = generate_quickpick(input_list,args.quickpick)
 			print (random_list)
 
 	if (args.draw is not None) & (args.quickpick is None):
