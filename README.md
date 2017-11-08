@@ -1,5 +1,5 @@
 ## TOTO analyzer for Singapore Pool v1.0
-This is a tool developed as part of the **Python for Data, Ops and Things** course assignment.<br>
+This is a tool developed as part of the **Python for Data, Ops and Things** course assignment.<br><br>
 It collect and analyse data from Singapore pool and is capable of using voice-assisted Alexa
 to grab the latest TOTO results.
 ```
