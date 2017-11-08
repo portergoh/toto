@@ -343,7 +343,6 @@ if __name__ == "__main__":
 		elif (args.draw) & (args.notin is not True):
 			input_list = past_draw_nums_list
 		elif (args.draw) & (args.notin):
-			print "hehehe"
 			input_list = get_num_not_in_past_draw(past_draw_nums_list)
 
 		print ("Your quick pick numbers are")
