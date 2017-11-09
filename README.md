@@ -5,6 +5,7 @@ to grab the latest TOTO results.
 ### Installation of package requirements
 pip install -r requirements.txt.
 
+### Examples
 ```
 usage: toto_analyzer.py [-h] [--plotfreq] [--update] [-d DRAW] [-s SET]
                         [-qp QUICKPICK]
@@ -24,7 +25,6 @@ optional arguments:
                         generate a list of random numbers, can be use together
                         with -d option
 ```
-### Examples
 **Update the cache with the latest results from Singapore Pool**
 <br>toto_analyzer.py --update
 <br>
