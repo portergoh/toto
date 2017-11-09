@@ -2,6 +2,9 @@
 This is a tool developed as part of the **Python for Data, Ops and Things** course assignment.<br><br>
 It collect and analyse data from Singapore pool and is capable of using voice-assisted Alexa
 to grab the latest TOTO results.
+### Installation of package requirements
+pip install -r requirements.txt.
+
 ```
 usage: toto_analyzer.py [-h] [--plotfreq] [--update] [-d DRAW] [-s SET]
                         [-qp QUICKPICK]
