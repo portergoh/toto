@@ -21,7 +21,7 @@ def hompage():
 		"""
 @ask.launch
 def start_skill():
-	welcome_message = "Hello master, do you like to know the latest toto results ?"
+	welcome_message = "Hello kheeteck, do you like to know the latest toto results ?"
 	return question(welcome_message)
 
 @ask.intent("YesIntent")
@@ -29,7 +29,7 @@ def get_last_draw():
 	url = "http://www.singaporepools.com.sg/en/product/Pages/toto_results.aspx"
 	dict_of_results = get_past_results(url,False)
 	_,list_of_draws = get_last_drawn_num_rows(dict_of_results,1)
-	draw_result = " ".join(num for num in list_of_draws)
+	draw_result = "The result is " + " ".join(num for num in list_of_draws)
 
 	return statement(draw_result)
 
