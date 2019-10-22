@@ -36,7 +36,7 @@ paho-mqtt==1.3.1
 paramiko==2.3.1
 pcapy==0.11.1
 pefile==2017.9.3
-Pillow==4.3.0
+Pillow==6.2.0
 psutil==5.4.0
 pyasn1==0.3.7
 pycparser==2.18
