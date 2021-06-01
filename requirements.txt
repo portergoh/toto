@@ -61,7 +61,7 @@ six==1.10.0
 slackclient==1.0.9
 subprocess32==3.2.7
 texttable==1.0.0
-urllib3==1.22
+urllib3==1.26.5
 websocket-client==0.44.0
 Werkzeug==0.12.2
 wget==3.2
